@@ -8,4 +8,11 @@ import { RouterView } from "vue-router";
   </div>
 </template>
 
-<style scoped></style>
+<style>
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #212529; /* previne fundo branco entre colunas */
+}
+</style>
