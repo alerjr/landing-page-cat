@@ -137,4 +137,8 @@ span {
     max-width: 100%;
   }
 }
+
+input:focus {
+  box-shadow: none;
+}
 </style>

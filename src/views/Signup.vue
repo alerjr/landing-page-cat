@@ -171,4 +171,8 @@ span {
 .btn-primary:hover {
   background-color: rgba(249, 113, 113, 0.69);
 }
+
+input:focus {
+  box-shadow: none;
+}
 </style>
