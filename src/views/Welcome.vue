@@ -21,7 +21,7 @@
     </div>
 
     <div class="col-lg-6 col-12 d-flex justify-content-center align-items-center bg-dark">
-      <img src="../assets/space.svg" class="col-lg-10 col-6" />
+      <img src="../assets/success.svg" class="col-lg-10 col-6" />
     </div>
   </div>
 </template>
