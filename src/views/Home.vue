@@ -1,5 +1,39 @@
-<script setup>
+<script>
 import { RouterLink } from "vue-router";
+import { fetchUsers } from "../services/data";
+
+export default {
+  data() {
+    return {
+      email: "",
+      password: "",
+    };
+  },
+  methods: {
+    async login() {
+      if (this.email && this.password) {
+        try {
+          const users = await fetchUsers();
+
+          const foundUser = users.find(
+            (user) => user.email === this.email && user.password === this.password
+          );
+
+          if (foundUser) {
+            this.$router.push("/welcome");
+          } else {
+            window.alert("Email ou senha incorretos.");
+          }
+        } catch (error) {
+          console.error(error);
+          window.alert("Erro ao buscar usuários.");
+        }
+      } else {
+        window.alert("Preencha todos os campos.");
+      }
+    },
+  },
+};
 </script>
 
 <template>
@@ -28,10 +62,11 @@ import { RouterLink } from "vue-router";
             id="emailInput"
             placeholder="Seu email"
             required
+            v-model="email"
           />
         </div>
         <div class="mb-3 input-group">
-        <span class="input-group-text bg-white border-end-0">
+          <span class="input-group-text bg-white border-end-0">
             <img
               src="../assets/password.svg"
               alt="Ícone de senha"
@@ -44,13 +79,16 @@ import { RouterLink } from "vue-router";
             id="passwordInput"
             placeholder="Sua senha"
             required
+            v-model="password"
           />
         </div>
 
         <div class="d-flex justify-content-center align-items-center">
-          <RouterLink to="/" class="col-lg-4 col-6 m-2">
-            <button type="button" class="btn btn-primary w-100 p-2">Login</button>
-          </RouterLink>
+          <div class="col-lg-4 col-6 m-2">
+            <button @click="login" type="button" class="btn btn-primary w-100 p-2">
+              Login
+            </button>
+          </div>
 
           <RouterLink to="/sign-up" class="col-lg-4 col-6 m-2">
             <button type="button" class="btn btn-dark w-100 p-2 border">
@@ -70,8 +108,16 @@ import { RouterLink } from "vue-router";
   font-family: "Kumbh Sans", sans-serif;
 }
 
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #000; /* previne fundo branco entre colunas */
+}
+
 input,
-button, span {
+button,
+span {
   border-radius: 2rem;
 }
 
@@ -82,5 +128,13 @@ button, span {
 
 .btn-primary:hover {
   background-color: rgba(249, 113, 113, 0.69);
+}
+
+/* Garante que colunas não causem lacunas no mobile */
+@media (max-width: 768px) {
+  .d-flex.vh-100.flex-wrap > div {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
 }
 </style>
